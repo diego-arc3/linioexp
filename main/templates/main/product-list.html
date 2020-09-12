@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> LinioExp </title>
+  </head>
+  <body>
+    <h1> LinioExp </h1>
+    <hr>
+    <h3> Productos </h3>
+    <ul>
+      {% for producto in object_list %}
+        <li>
+          <a href="{% url 'product-detail' producto.pk %}">
+            {{ producto.nombre }}
+          </a>
+          - {{ producto.precio }}
+        </li>
+      {% empty %}
+        <li>Aun no hay productos disponibles.</li>
+      {% endfor %}
+    </ul>
+    <hr>
+    <ul>
+      <li> <a href="{% url 'index' %}">Inicio</a> </li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> LinioExp </title>
+  </head>
+  <body>
+    <h1> Linio Exp </h1>
+    <hr>
+    <h3> {{ object.nombre }} </h3>
+    <ul>
+      <li><strong>Precio:</strong> {{ object.precio }}</li>
+      <li><strong>Descripcion:</strong> {{ object.descripcion }}</li>
+      <li><strong>Categoria:</strong> {{ object.categoria.nombre }}</li>
+      <li><strong>Proveedor:</strong> {{ object.proveedor }}</li>
+    </ul>
+    <hr>
+    <ul>
+      <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
+      <li><a href="{% url 'index' %}">Inicio</a></li>
+    </ul>
+  </body>
+</html>
