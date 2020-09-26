@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -37,4 +38,47 @@ class Producto(models.Model):
 
         return f'{codigo_categoria}-{codigo_producto}'
     
+class Profile(models.Model):
+    # Relacion con el modelo User de Django
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     
+    # Atributos adicionales para el usuario
+    documento_identidad = models.CharField(max_length=8)
+    fecha_nacimiento = models.DateField()
+    estado = models.CharField(max_length=3)
+    ## Opciones de genero
+    MASCULINO = 'MA'
+    FEMENINO = 'FE'
+    NO_BINARIO = 'NB'
+    GENERO_CHOICES = [
+        (MASCULINO, 'Masculino'),
+        (FEMENINO, 'Femenino'),
+        (NO_BINARIO, 'No Binario')
+    ]
+    genero = models.CharField(max_length=2, choices=GENERO_CHOICES)
+
+    def __str__(self):
+        return self.user.get_username()
+
+class Cliente(models.Model):
+    # Relacion con el modelo Perfil
+    user_profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    # Atributos especificos del Cliente
+    preferencias = models.ManyToManyField(to='Categoria')
+
+    def __str__(self):
+        return f'Cliente: {self.user_profile.user.get_username()}'
+
+
+class Colaborador(models.Model):
+    # Relacion con el modelo Perfil
+    user_profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    # Atributos especificos del Colaborador
+    reputacion = models.FloatField()
+    cobertura_entrega = models.ManyToManyField(to='Localizacion')
+
+    def __str__(self):
+        return f'Colaborador: {self.user_profile.user.get_username()}'
+
