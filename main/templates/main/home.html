@@ -14,6 +14,15 @@
     </p>
     {% endif %}
 
+    {% if messages %}
+      {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
     <hr>
     <h5> Ultimos productos </h5>
     <ul>

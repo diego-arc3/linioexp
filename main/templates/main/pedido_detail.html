@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3 class="title"> Carrito </h3>
+    <div class="block">
+        <h5 class="subtitle"> Información General </h5>
+        <div class="content">
+            <ul>
+              <li> <strong>Cliente:</strong> {{ object.cliente.user_profile.user.get_username }}</li>
+              <li> <strong>Fecha Creación:</strong> {{ object.fecha_creacion }}</li>
+              <li> <strong>Estado:</strong> {{ object.estado }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="block">
+        <h5 class="subtitle"> Detalle </h5>
+        <div class="content">
+            <ul>
+              {% for detalle in detalles %}
+                <li>
+                  {{ detalle }}
+                  <a href="{% url 'add-to-cart' product_pk=detalle.producto.pk %}" class="button is-success">
+                    +
+                  </a>
+                  <a href="{% url 'remove-from-cart' product_pk=detalle.producto.pk %}" class="button is-danger">
+                    -
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <a href="{% url 'pedido-update' pk=object.pk %}" class='button is-info'>
+      Checkout
+    </a>
+    <hr>
+    <div class="content">
+        <ul>
+          <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
+          <li><a href="{% url 'home' %}">Inicio</a></li>
+        </ul>
+    </div>
+{% endblock %}
