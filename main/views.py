@@ -12,8 +12,7 @@ from random import randint
 from .models import *
 from .forms import *
 
-def home(request):
-    return HttpResponse("Hola Mundo. Te encuentras en la página de inicio de Linio Express")
+
 
 # Create your views here.
 
