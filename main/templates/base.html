@@ -11,6 +11,11 @@
       <div class="container">
         <h1 class="title is-1"> Linio Express </h1>
         <hr>
+        <div class="content">
+          <form action="{% url 'product-list' %}" method="get">
+              <input class="input is-rounded" type="text" name="q" placeholder="Busca tu producto...">
+          </form>
+        </div>
         {% block content %}
         {% endblock %}
       </div>
