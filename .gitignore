@@ -1,2 +1,4 @@
 .vscode/settings.json
 media
+linioexp\__pycache__
+db.sqlite3
