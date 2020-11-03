@@ -10,13 +10,11 @@ class Proveedor(models.Model):
     def __str__(self):
         return self.razon_social
 
-
 class Categoria(models.Model):
     codigo = models.CharField(max_length=4)
     nombre = models.CharField(max_length=50)
     def __str__(self):
         return f'{self.codigo}: {self.nombre}'
-
 
 class Localizacion(models.Model):
     distrito = models.CharField(max_length=20)
@@ -24,7 +22,6 @@ class Localizacion(models.Model):
     departamento = models.CharField(max_length=20)
     def __str__(self):
         return f'{self.distrito}, {self.provincia}, {self.departamento}'
-
 
 class Producto(models.Model):
     # Relaciones
@@ -135,10 +132,3 @@ class DetallePedido(models.Model):
 
     def get_subtotal(self):
         return self.producto.get_precio_final() * self.cantidad
-
-
-class ProductoImage(models.Model):
-    product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to="products", null=True, blank=True)
-
-

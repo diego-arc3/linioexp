@@ -2,32 +2,18 @@
 
 {% block content %}
     <h3> Productos </h3>
-    <hr>
-    <div class="columns is-multiline">
+    <ul>
       {% for producto in object_list %}
-          <div class="column is-4">
-              <div class="card">
-                  <div class="card-image">
-                      <figure class="image">
-                          <img src="{{ producto.images.first.image.url|default:'https://via.placeholder.com/128' }}" alt="Imagen no disponible">
-                      </figure>
-                  </div>
-                  <div class="card-content">
-                      <h6>
-                          <a href="{% url 'product-detail' producto.pk %}">
-                              {{ producto.nombre }}
-                          </a>
-                      </h6>
-                      <p>$ {{ producto.precio }}</p>
-                  </div>
-              </div>
-          </div>
+        <li>
+          <a href="{% url 'product-detail' producto.pk %}">
+            {{ producto.nombre }}
+          </a>
+          - {{ producto.precio }}
+        </li>
       {% empty %}
-          <div class="content">
-              <h6>Aun no hay productos disponibles.</h6>
-          </div>
+        <li>Aun no hay productos disponibles.</li>
       {% endfor %}
-    </div>
+    </ul>
     <hr>
     <ul>
       <li> <a href="{% url 'home' %}">Inicio</a> </li>
