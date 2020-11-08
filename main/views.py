@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, FormView, TemplateView, V
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.db.models import F
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import messages
 
@@ -101,7 +102,7 @@ class RegistrationView(FormView):
         return super().form_valid(form)
     
     
-class AddToCartView(View):
+class AddToCartView(LoginRequiredMixin, View):
     def get(self, request, product_pk):
         # Obten el cliente
         user_profile = Profile.objects.get(user=request.user)
@@ -172,6 +173,7 @@ class PedidoDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['detalles'] = context['object'].detallepedido_set.all()
         return context
+    
 
 
 class PedidoUpdateView(UpdateView):
