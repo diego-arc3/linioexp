@@ -10,8 +10,8 @@
 
     <!-- Add the checkout buttons, set up the order and approve the order -->
     <script>
-      var total = { { pedido.get_total } }
-      var completePaymentUrl = {% url "complete-payment" %}
+      var total = {{ pedido.get_total }}
+      var completePaymentUrl = {% url 'complete-payment'%}
 
       paypal.Buttons({
         createOrder: function(data, actions) {
