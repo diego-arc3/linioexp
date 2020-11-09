@@ -158,7 +158,7 @@ class RemoveFromCartView(View):
         return redirect(request.META['HTTP_REFERER'])
 
 
-class PedidoDetailView(DetailView):
+class PedidoDetailView(LoginRequiredMixin, DetailView):
     model = Pedido
 
     def get_object(self):
@@ -166,8 +166,9 @@ class PedidoDetailView(DetailView):
         user_profile = Profile.objects.get(user=self.request.user)
         cliente = Cliente.objects.get(user_profile=user_profile)
         # Obtén/Crea un/el pedido en proceso (EP) del usuario
-        pedido  = Pedido.objects.get(cliente=cliente, estado='EP')
+        pedido = Pedido.objects.get(cliente=cliente, estado='EP')
         return pedido
+ 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
