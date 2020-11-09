@@ -29,6 +29,7 @@
               {% endfor %}
             </ul>
         </div>
+        <h3 class="subtitle">Precio total del pedido: {{ pedido.get_total }}</h3>
     </div>
     <a href="{% url 'pedido-update' pk=object.pk %}" class='button is-info'>
       Checkout
