@@ -2,16 +2,25 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-    <h3> Hola {{ user.get_username }} </h3>
-    <p>
-      <a href="{% url 'logout' %}">Cierra Sesion</a>
-    </p>
+    <div class="content">
+      <h3> Hola {{ user.get_username }} </h3>
+      <p>
+        <a class="button is-light" href="{% url 'logout' %}">Cierra Sesion</a>
+      </p>
+    </div>
     {% else %}
-    <h3> Hola </h3>
-    <p>
-      <a href="{% url 'login' %}">Inicia Sesion</a> o
-      <a href="{% url 'register' %}">Registrate</a>
-    </p>
+    <div class="content">
+      <h3> Hola </h3>
+      <div class="columns">
+        <div class="column is-narrow">
+          <a class="button is-link" href="{% url 'login' %}">Inicia Sesion</a>
+        </div>
+
+        <div class="column is-narrow">
+          <a class="button is-light" href="{% url 'register' %}">Registrate</a>
+        </div>
+      </div>
+    </div>
     {% endif %}
 
     {% if messages %}
@@ -24,19 +33,23 @@
     {% endif %}
 
     <hr>
+
+    <div class="content">
     <h5> Ultimos productos </h5>
-    <ul>
-      {% for producto in latest_products %}
-        <li>
-          <a href="{% url 'product-detail' producto.pk %}">
-            {{ producto.nombre }}
-          </a>
-          - {{ producto.precio }}
-        </li>
-      {% empty %}
-        <li>Aun no hay productos disponibles.</li>
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for producto in latest_products %}
+          <li>
+            <a href="{% url 'product-detail' producto.pk %}">
+              {{ producto.nombre }}
+            </a>
+            - {{ producto.precio }}
+          </li>
+        {% empty %}
+          <li>Aun no hay productos disponibles.</li>
+        {% endfor %}
+      </ul>
+
+    </div>
     <hr>
     <ul>
       <li><a href="{% url 'product-list' %}">Ver Lista de Productos Completa</a></li>
