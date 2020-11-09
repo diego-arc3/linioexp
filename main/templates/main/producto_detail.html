@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h3> {{ object.nombre }} </h3>
+    <div class="content">
+      <h3 class="title"> {{ object.nombre }} </h3>
+    </div>
 
     <div class="columns">
       {% for image in object.images.all %}
@@ -22,11 +24,22 @@
     </div>
 
     <ul>
-      <li><strong>Precio:</strong> {{ object.precio }}</li>
-      <li><strong>Descripcion:</strong> {{ object.descripcion }}</li>
-      <li><strong>Categoria:</strong> {{ object.categoria.nombre }}</li>
-      <li><strong>Proveedor:</strong> {{ object.proveedor }}</li>
+      <div class="block">
+        <li><strong>Precio:</strong> {{ object.precio }}</li>
+      </div>
+      <div class="block">
+        <li><strong>Descripcion:</strong> {{ object.descripcion }}</li>
+      </div>
+      <div class="block">
+        <li><strong>Categoria:</strong> {{ object.categoria.nombre }}</li>
+      </div>
+      <div class="block">
+        <li><strong>Proveedor:</strong> {{ object.proveedor }}</li>
+      </div>
     </ul>
+    
+    <div class="mt-4"><p></p></div>
+
     <div class="block">
       <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
         Añadir al carrito
@@ -34,10 +47,21 @@
       <a href="{% url 'pedido-detail' %}" class='button'>
         Ver carrito
       </a>
+      {% if messages %}
+      {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
     </div>
-    <hr>
-    <ul>
-      <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
-      <li><a href="{% url 'home' %}">Inicio</a></li>
-    </ul>
+    <div class="content">
+      <p>
+        <a href="{% url 'product-list' %}">Ver Lista de Productos</a>
+      </p>
+      <p>
+        <a href="{% url 'home' %}">Inicio</a>
+      </p>
+    </div>
 {% endblock %}

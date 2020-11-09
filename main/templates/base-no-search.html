@@ -7,14 +7,23 @@
     <title> LinioExp </title>
   </head>
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title is-1"> Linio Express </h1>
-        <hr>
-        
-        {% block content %}
-        {% endblock %}
+    <section class="hero is-dark">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-2">
+            Linio Express
+          </h1>
+        </div>
       </div>
     </section>
+    <div class="has-background-light">
+      <section class="section">
+        <div class="container">
+
+          {% block content %}
+          {% endblock %}
+        </div>
+      </section>
+    </div>
   </body>
 </html>

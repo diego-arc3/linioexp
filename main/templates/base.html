@@ -7,18 +7,28 @@
     <title> LinioExp </title>
   </head>
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title is-1"> Linio Express </h1>
-        <hr>
-        <div class="content">
-          <form action="{% url 'product-list' %}" method="get">
-              <input class="input is-rounded" type="text" name="q" placeholder="Busca tu producto...">
-          </form>
+    <section class="hero is-dark">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-2">
+            Linio Express
+          </h1>
         </div>
-        {% block content %}
-        {% endblock %}
       </div>
     </section>
+    <div class="has-background-light">
+      <section class="section">
+        <div class="container">
+
+          <div class="content">
+            <form action="{% url 'product-list' %}" method="get">
+                <input class="input is-rounded" type="text" name="q" placeholder="Busca tu producto...">
+            </form>
+          </div>
+          {% block content %}
+          {% endblock %}
+        </div>
+      </section>
+    </div>
   </body>
 </html>
