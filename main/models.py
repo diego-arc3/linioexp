@@ -118,8 +118,11 @@ class Pedido(models.Model):
         total = 0
         for detalle in detalles:
             total += detalle.get_subtotal()
-        total += self.tarifa
-        return total
+        if self.tarifa == None:
+            return total
+        else:
+            total += self.tarifa
+            return total
 
 
 class DetallePedido(models.Model):
