@@ -44,17 +44,21 @@
       <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
         Añadir al carrito
       </a>
+
+      {% if pedido != None %}  
       <a href="{% url 'pedido-detail' %}" class='button'>
         Ver carrito
       </a>
+      {% endif %}
+
       {% if messages %}
-      {% for message in messages %}
-        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
-            <button class="delete"></button>
-            {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
+        {% for message in messages %}
+          <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+              <button class="delete"></button>
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
     <div class="content">
       <p>

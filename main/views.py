@@ -42,6 +42,18 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Producto
     
+    def get_object(self):
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=self.request.user)
+        cliente = Cliente.objects.get(user_profile=user_profile)
+        # Obtén/Crea un/el pedido en proceso (EP) del usuario
+        try:
+            pedido = Pedido.objects.get(cliente=cliente, estado='EP')
+            return pedido
+        except:
+            pedido = None
+            return pedido
+    
     
 class RegistrationView(FormView):
     template_name = 'registration/register.html'
