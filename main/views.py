@@ -42,17 +42,20 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Producto
     
-    def get_object(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         # Obten el cliente
         user_profile = Profile.objects.get(user=self.request.user)
         cliente = Cliente.objects.get(user_profile=user_profile)
         # Obtén/Crea un/el pedido en proceso (EP) del usuario
         try:
             pedido = Pedido.objects.get(cliente=cliente, estado='EP')
-            return pedido
+            context['is_pedido'] = True
+            return context
+        
         except:
-            pedido = None
-            return pedido
+            context['is_pedido'] = False
+            return context
     
     
 class RegistrationView(FormView):
