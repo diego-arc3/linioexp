@@ -47,12 +47,12 @@ class ProductDetailView(DetailView):
         # Obten el cliente
         user_profile = Profile.objects.get(user=self.request.user)
         cliente = Cliente.objects.get(user_profile=user_profile)
-        # Obtén/Crea un/el pedido en proceso (EP) del usuario
+        # Si encuentra un pedido en proceso, devuelve True en context
         try:
             pedido = Pedido.objects.get(cliente=cliente, estado='EP')
             context['is_pedido'] = True
             return context
-        
+        # Si no lo encuentra, devuelve False
         except:
             context['is_pedido'] = False
             return context
