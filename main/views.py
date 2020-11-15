@@ -44,11 +44,11 @@ class ProductDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Obten el cliente
-        user_profile = Profile.objects.get(user=self.request.user)
-        cliente = Cliente.objects.get(user_profile=user_profile)
-        # Si encuentra un pedido en proceso, devuelve True en context
         try:
+            # Obten el cliente
+            user_profile = Profile.objects.get(user=self.request.user)
+            cliente = Cliente.objects.get(user_profile=user_profile)
+            # Si encuentra un pedido en proceso, devuelve True en context
             pedido = Pedido.objects.get(cliente=cliente, estado='EP')
             context['is_pedido'] = True
             return context
