@@ -28,9 +28,17 @@
           </div>
       {% endfor %}
     </div>
+    
     <hr>
-    <ul>
-      <li> <a href="{% url 'home' %}">Inicio</a> </li>
-    </ul>
+
+    <div class="mt-4">
+        <div class="level">
+            <div class="level-left">
+                <h2 class="subtitle is-5">
+                    <a href="{% url 'home' %}">Inicio</a>
+                </h2>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

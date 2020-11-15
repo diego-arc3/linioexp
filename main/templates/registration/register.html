@@ -1,11 +1,40 @@
-{% extends "base-no-search.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Registrate">
-</form>
+<section class="section">
+    <div class="container">
+        <div class= "level-item has-text-centered">
+            <h1 class="subtitle">Elija un tipo de cuenta:</h1>
+        </div>
+    </div>
+    <div class="mt-5">
+    <div class="level-item has-text-centered">
+        <div class="content">
+            <div class="columns">
+                <div class="column is-narrow">
+                    <a class="button is-dark" href="{% url 'register-cliente' %}">Cliente</a>
+                </div>
+        
+                <div class="column is-narrow">
+                    <a class="button is-dark" href="{% url 'register-colaborador' %}">Colaborador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<hr>
+
+<div class="mt-4">
+    <div class="level">
+        <div class="level-left">
+            <h2 class="subtitle is-5">
+                <a href="{% url 'home' %}">Inicio</a>
+            </h2>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

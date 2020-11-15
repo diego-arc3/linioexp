@@ -117,6 +117,18 @@ class RegistrationView(FormView):
         return super().form_valid(form)
     
     
+class ClienteRegistrationView(FormView):
+    template_name = 'registration/cliente.html'
+    form_class = UserForm
+    success_url = reverse_lazy('home')
+
+
+class ColaboradorRegistrationView(FormView):
+    template_name = 'registration/colaborador.html'
+    form_class = UserForm
+    success_url = reverse_lazy('home')
+    
+    
 class AddToCartView(LoginRequiredMixin, View):
     def get(self, request, product_pk):
         # Obten el cliente
