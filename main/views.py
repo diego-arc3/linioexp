@@ -57,9 +57,15 @@ class ProductDetailView(DetailView):
             context['is_pedido'] = False
             return context
     
-    
+
 class RegistrationView(FormView):
     template_name = 'registration/register.html'
+    form_class = UserForm
+    success_url = reverse_lazy('home')
+    
+   
+class ClienteRegistrationView(FormView):
+    template_name = 'registration/cliente.html'
     form_class = UserForm
     success_url = reverse_lazy('home')
     
@@ -98,6 +104,40 @@ class RegistrationView(FormView):
 
             cliente.save()
         
+        # Login the user
+        login(self.request, user)
+
+        return super().form_valid(form)
+     
+
+class ColaboradorRegistrationView(FormView):
+    template_name = 'registration/colaborador.html'
+    form_class = UserForm
+    success_url = reverse_lazy('home')
+    
+    def form_valid(self, form):
+        # This methos is called when valid from data has been POSTed
+        # It should return an HttpResponse
+
+        # Create User
+        username = form.cleaned_data['username']
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password1']
+
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+        user.save()
+        
+        # Create Profile
+        documento_identidad = form.cleaned_data['documento_identidad']
+        fecha_nacimiento = form.cleaned_data['fecha_nacimiento']
+        estado = form.cleaned_data['estado']
+        genero = form.cleaned_data['genero']
+
+        user_profile = Profile.objects.create( user=user, documento_identidad=documento_identidad, fecha_nacimiento=fecha_nacimiento, estado=estado, genero=genero)
+        user_profile.save()
+        
         # Create Colaborador if needed
         is_colaborador = form.cleaned_data['is_colaborador']
         if is_colaborador:
@@ -115,18 +155,6 @@ class RegistrationView(FormView):
         login(self.request, user)
 
         return super().form_valid(form)
-    
-    
-class ClienteRegistrationView(FormView):
-    template_name = 'registration/cliente.html'
-    form_class = UserForm
-    success_url = reverse_lazy('home')
-
-
-class ColaboradorRegistrationView(FormView):
-    template_name = 'registration/colaborador.html'
-    form_class = UserForm
-    success_url = reverse_lazy('home')
     
     
 class AddToCartView(LoginRequiredMixin, View):

@@ -4,8 +4,134 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Registrate">
+
+    <div class="field">
+        <label class="label" for="id_username">Username</label>
+        <div class="control">
+            <input class="input is-primary" required id="id_username" type="text" placeholder="Username" name="username">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="id_first_name">First name</label>
+        <div class="control">
+            <input class="input is-primary" id="id_first_name" type="text" placeholder="First name" name="first_name">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="id_last_name">Last name</label>
+        <div class="control">
+            <input class="input is-primary" id="id_last_name" type="text" placeholder="Last name" name="last_name">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="id_email">Email</label>
+        <div class="control">
+            <input class="input is-primary" required id="id_email" type="email" placeholder="Email" name="email">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="id_documento_identidad">Documento de identidad</label>
+        <div class="control">
+            <input class="input is-primary" id="id_documento_identidad" type="text" placeholder="DNI" name="documento_identidad" maxlength="8">
+        </div>
+    </div>
+
+    <div class="content">
+    <div class="columns">
+
+        <div class="column is-3">
+            <div class="field">
+                <label class="label" for="id_fecha_nacimiento">Fecha de nacimiento</label>
+                <div class="control">
+                    <input class="input is-primary" id="id_fecha_nacimiento" type="text" name="fecha_nacimiento" placeholder="Formato: YYYY-MM-DD">
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-narrow">
+            <div class="field">
+                <label class="label" for="id_genero">Género</label>
+                <div class="control">
+                    <div class="select is-primary">
+                        <select name="genero" id="id_genero">
+                            <option value="MA">Masculino</option>
+                            <option value="FE">Femenino</option>
+                            <option value="NB">No Binario</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-narrow">
+            <div class="field">
+                <label class="label" for="id_preferencias">Preferencias</label>
+                <div class="control">
+                    <div class="select is-primary">
+                        <select name="preferencias" id="id_preferencias">
+                                <option value="1">--</option>
+                            {% for preferencia in form.preferencias.field.queryset %}
+                                <option value="{{ forloop.counter }}">{{ preferencia }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="id_password">Password</label>
+        <div class="control">
+            <input class="input is-primary" id="id_password" type="password" placeholder="Password" name="password1">
+        </div>
+        <div class="content is-small">
+            <ul>
+                <li>Your password can’t be too similar to your other personal information.</li>
+                <li>Your password must contain at least 8 characters.</li>
+                <li>Your password can’t be a commonly used password.</li>
+                <li>Your password can’t be entirely numeric.</li>
+            </ul>
+        </div>
+
+        <label class="label" for="id_password2">Confirm your password</label>
+        <div class="control">
+            <input class="input is-primary" id="id_password2" type="password" placeholder="Confirm your password" name="password2">
+        </div>
+    </div>
+
+    <div class="is-hidden">
+        <input type="checkbox" name="is_cliente" checked>
+        <input type="checkbox" name="is_colaborador">
+        <input type="text" name="reputacion">
+        <input type="text" maxlength="3" name="estado" value="aaa">
+        <div class="content">
+            <div class="field">
+                <label class="label" for="id_cobertura">Cobertura para la entrega</label>
+                <div class="control">
+                    <div class="select is-primary">
+                        <select name="cobertura_entrega" id="id_cobertura">
+                                <option value="">----------</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="field">
+        <div class="control">
+            <input class="button is-link" type="submit" value="Registrate">
+        </div>
+    </div>
+
 </form>
 
 <hr>
