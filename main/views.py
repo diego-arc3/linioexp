@@ -18,14 +18,126 @@ from .forms import *
 # Create your views here.
 
 class HomePageView(TemplateView):
-
+    model = Pedido
     template_name = "main/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_products'] = Producto.objects.all()[:5]
+        
+        try:
+            user_profile = Profile.objects.get(user=self.request.user)
+            cliente = Cliente.objects.get(user_profile=user_profile)
+            context['is_cliente'] = True
+        except:
+            try:
+                colaborador = Colaborador.objects.get(user_profile=user_profile)
+                context['is_colaborador'] = True
+            except:
+                pass
 
         return context
+
+
+class PedidosClienteView(ListView):
+    model = Pedido
+    
+    def get_template_names(self):
+        
+        return 'main/pedidos_cliente.html'
+        
+    def get_queryset(self):
+        
+        user_profile = Profile.objects.get(user=self.request.user)
+        cliente = Cliente.objects.get(user_profile=user_profile)
+        object_list = Pedido.objects.filter(cliente__exact=cliente.pk)
+        return object_list   
+
+class CancelarPedidoView(View):
+    def get(self, request, pedido_pk):
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=request.user)
+        cliente = Cliente.objects.get(user_profile=user_profile)
+        
+        # Obtén el pedido que queremos modificar
+        pedido = Pedido.objects.get(pk=pedido_pk)
+        
+        if pedido.estado == "ET" or pedido.estado == "PAG":
+            # Armamos el mensaje
+            messages.success(request, 'Tu pedido ha sido cancelado sin costo alguno.')
+        
+        elif pedido.estado == "EC":
+            # Armamos el mensaje
+            messages.failure(request, 'Tu pedido ha sido cancelado, pero como el repartidor estaba en camino hemos descontado la tarifa de envío..')
+        
+        # Cambiamos el estado del pedido a "CAN" (Cancelado)
+        pedido.estado = "CAN"
+        # Guardamos los cambios
+        pedido.save()
+         
+        # Recarga la página
+        return redirect(request.META['HTTP_REFERER'])
+
+    
+class PedidosColaboradorView(ListView):
+    model = Pedido
+    def get_queryset(self):
+        
+        user_profile = Profile.objects.get(user=self.request.user)
+        colaborador = Colaborador.objects.get(user_profile=user_profile)
+        object_list = Pedido.objects.filter(repartidor__exact=colaborador.pk)
+        return object_list     
+
+
+class EstadoEnTiendaView(View):
+    def get(self, request, pedido_pk):
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=request.user)
+        colaborador = Colaborador.objects.get(user_profile=user_profile)
+        
+        # Obtén el pedido que queremos modificar
+        pedido = Pedido.objects.get(pk=pedido_pk)
+
+        # Cambiamos el estado del pedido a "ET" (En tienda)
+        pedido.estado = "ET"
+        # Guardamos los cambios
+        pedido.save()
+        # Recarga la página
+        return redirect(request.META['HTTP_REFERER'])
+
+
+class EstadoEnCaminoView(View):
+    def get(self, request, pedido_pk):
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=request.user)
+        colaborador = Colaborador.objects.get(user_profile=user_profile)
+        
+        # Obtén el pedido que queremos modificar
+        pedido = Pedido.objects.get(pk=pedido_pk)
+
+        # Cambiamos el estado del pedido a "EC" (En camino)
+        pedido.estado = "EC"
+        # Guardamos los cambios
+        pedido.save()
+        # Recarga la página
+        return redirect(request.META['HTTP_REFERER'])
+
+
+class EstadoEntregadoView(View):
+    def get(self, request, pedido_pk):
+        # Obten el cliente
+        user_profile = Profile.objects.get(user=request.user)
+        colaborador = Colaborador.objects.get(user_profile=user_profile)
+        
+        # Obtén el pedido que queremos modificar
+        pedido = Pedido.objects.get(pk=pedido_pk)
+
+        # Cambiamos el estado del pedido a "ENT" (Entregado)
+        pedido.estado = "ENT"
+        # Guardamos los cambios
+        pedido.save()
+        # Recarga la página
+        return redirect(request.META['HTTP_REFERER'])
 
 
 class ProductListView(ListView):

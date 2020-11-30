@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="content">
+        <h2 class="title">Tus pedidos</h2>
+
+        {% for pedido in object_list %}
+        <div class="card" style="background-color:rgb(84, 158, 138);color:white; margin-bottom: 1.5ch; margin-right:30em;">
+            <div class="card-content" style="padding-top:0ch;padding-bottom: 1ch;">
+            <ul>
+                <li>Fecha de pedido: {{ pedido.fecha_creacion }}</li>
+                <li>Dirección de entrega: {{ pedido.direccion_entrega }}</li>
+                {% if pedido.estado == "PAG" %}
+                <li>Estado: En tienda</li>
+                {% elif pedido.estado == "ET" %}
+                <li>Estado: En tienda</li>
+                {% elif pedido.estado == "EC" %}
+                <li>Estado: En camino</li>
+                {% elif pedido.estado == "ENT" %}
+                <li>Estado: Entregado</li>
+                {% elif pedido.estado == "CAN" %}
+                <li>Estado: Cancelado</li>
+                {% endif %}
+                <li>Monto: {{ pedido.get_total }}</li>
+                
+                {% if pedido.repartidor != None %}
+                <li>Colaborador: {{ pedido.repartidor.nombre }}</li>
+                {% endif %}
+            </ul>
+            </div>
+            {% if pedido.estado != "ENT" and pedido.estado != "CAN"%}
+            <div class="card-footer" style="background-color:rgb(54, 54, 54);">
+                <a href="{% url 'cancelar-pedido' pedido_pk=pedido.pk %}" class="card-footer-item" style="color:white; background-color:rgb(54, 54, 54); padding:0.4em;">Cancelar Pedido</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% empty %}
+
+        <div class = "content">
+            <h6>No tienes pedidos todavía</h6>
+        </div>
+
+        {% endfor%}
+
+    </div>
+
+    <hr>
+
+    <div class="mt-4">
+        <div class="level">
+            <div class="level-left">
+                <h2 class="subtitle is-5">
+                    <a class="button is-dark" href="{% url 'home' %}">Inicio</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}

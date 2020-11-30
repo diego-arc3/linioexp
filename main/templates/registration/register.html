@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-no-search.html" %}
 
 {% block content %}
 
@@ -31,7 +31,7 @@
     <div class="level">
         <div class="level-left">
             <h2 class="subtitle is-5">
-                <a href="{% url 'home' %}">Inicio</a>
+                <a class="button is-dark" href="{% url 'home' %}">Inicio</a>
             </h2>
         </div>
     </div>

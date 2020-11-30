@@ -95,6 +95,9 @@ class Colaborador(models.Model):
 
     def __str__(self):
         return f'Colaborador: {self.user_profile.user.get_username()}'
+    
+    def nombre(self):
+        return f'{self.user_profile.user.first_name} {self.user_profile.user.last_name}'
 
 
 class Pedido(models.Model):

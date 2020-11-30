@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" style="height:100%">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <title> LinioExp </title>
   </head>
-  <body>
-    <section class="hero is-dark">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title is-2">
-            Linio Express
-          </h1>
+  <body style="height:100%" class="has-background-light">
+    <nav class="navbar" style="background-color:rgb(50,94,125);">
+      <div class="navbar-brand" style="margin: 2em;">
+        <h1 class="title is-2" style="color:white">
+          Linio Express
+        </h1>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="navbar-end" style="margin-right: 1em;">
+        <h3 class="navbar-item" style="color:white;">
+          Hola {{ user.get_username }}
+        </h3>
+        <div class="navbar-item">
+          <a class="button is-dark" href="{% url 'logout' %}">Cierra Sesion</a>
         </div>
       </div>
-    </section>
+      {% else %}
+      <div class="navbar-end" style="margin-right: 1em;">
+        <div class="navbar-item">
+          <div class="column is-narrow">
+            <a class="button is-dark" href="{% url 'login' %}">Inicia Sesion</a>
+          </div>
+
+          <div class="column is-narrow">
+            <a class="button is-dark" href="{% url 'register' %}">Registrate</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </nav>
     <div class="has-background-light">
       <section class="section">
         <div class="container">

@@ -1,26 +1,7 @@
-{% extends "base.html" %}
+{% extends "base-no-search.html" %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-    <div class="content">
-      <h3> Hola {{ user.get_username }} </h3>
-      <p>
-        <a class="button is-light" href="{% url 'logout' %}">Cierra Sesion</a>
-      </p>
-    </div>
-    {% else %}
-    <div class="content">
-      <div class="columns">
-        <div class="column is-narrow">
-          <a class="button is-link" href="{% url 'login' %}">Inicia Sesion</a>
-        </div>
-
-        <div class="column is-narrow">
-          <a class="button is-light" href="{% url 'register' %}">Registrate</a>
-        </div>
-      </div>
-    </div>
-    {% endif %}
+    
 
     {% if messages %}
       {% for message in messages %}
@@ -31,27 +12,56 @@
       {% endfor %}
     {% endif %}
 
-    <hr>
+    
+    {% if is_colaborador  %}
+
+    <div class="content" style="margin-top:0em;">
+      <p>
+        <a class="button is-dark" href="{% url 'pedidos-list' %}">Ver pedidos</a>
+      </p>
+    </div>
+
+    {% else %}
+
+    <div class="content" style="margin-top:0em; padding-top: 0em;">
+      <form action="{% url 'product-list' %}" method="get">
+          <input class="input is-rounded" type="text" name="q" placeholder="Busca tu producto...">
+      </form>
+    </div>
+
+    <div class="columns">
+    {% if user.is_authenticated %}
+      <div class="column is-narrow">
+        <a class="button is-dark" href="{% url 'pedidos-cliente' %}">Ver pedidos</a>
+      </div>
+    {% endif %}
+      <div class="column is-narrow">
+        <a class="button is-dark" href="{% url 'product-list' %}">Ver Lista de Productos Completa</a>
+      </div>
+    
+    </div>
+    
 
     <div class="content">
     <h5> Ultimos productos </h5>
       <ul>
         {% for producto in latest_products %}
+        <div class="card" style="background-color:rgb(50,94,125); color:white;padding:1.5ch;padding-left:4ch; margin-bottom: 1ch; margin-right:50em;">
           <li>
-            <a href="{% url 'product-detail' producto.pk %}">
+            <a href="{% url 'product-detail' producto.pk %}" style="color:white;">
               {{ producto.nombre }}
-            </a>
             - {{ producto.precio }}
+            </a>
           </li>
+        </div>
         {% empty %}
           <li>Aun no hay productos disponibles.</li>
         {% endfor %}
+
       </ul>
 
     </div>
-    <hr>
-    <ul>
-      <li><a href="{% url 'product-list' %}">Ver Lista de Productos Completa</a></li>
-    </ul>
+
+    {% endif %}
     
 {% endblock %}

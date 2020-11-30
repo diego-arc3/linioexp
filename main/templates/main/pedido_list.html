@@ -1,0 +1,46 @@
+{% extends "base-no-search.html" %}
+
+{% block content %}
+
+    <div class="content">
+        <h2 class="title">Tus pedidos</h2>
+
+        {% for pedido in object_list %}
+        <div class="card" style="background-color:rgb(84, 158, 138);color:white; margin-bottom: 1.5ch; margin-right:14em;">
+            <div class="card-content" style="padding-top:0ch;padding-bottom: 1ch;">
+            <ul>
+                <li>Fecha de pedido: {{ pedido.fecha_creacion }}</li>
+                <li>Dirección de entrega: {{ pedido.direccion_entrega }}</li>
+                <li>Estado: {{ pedido.estado }}</li>
+                <li>Monto: {{ pedido.get_total }}</li>
+            </ul>
+            </div>
+            <div class="card-footer" style="background-color: rgb(54, 54, 54);">
+                <a href="{% url 'estado-en-tienda' pedido_pk=pedido.pk %}" class="card-footer-item" style="color:white;">En tienda</a>
+                <a href="{% url 'estado-en-camino' pedido_pk=pedido.pk %}" class="card-footer-item" style="color:white;">En camino</a>
+                <a href="{% url 'estado-entregado' pedido_pk=pedido.pk %}" class="card-footer-item" style="color:white;">Entregado</a>
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class = "content">
+            <h6>No tienes pedidos todavía</h6>
+        </div>
+
+        {% endfor%}
+
+    </div>
+
+    <hr>
+
+    <div class="mt-4">
+        <div class="level">
+            <div class="level-left">
+                <h2 class="subtitle is-5">
+                    <a class="button is-dark" href="{% url 'home' %}">Inicio</a>
+                </h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
