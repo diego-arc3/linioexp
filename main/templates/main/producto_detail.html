@@ -41,13 +41,13 @@
     <div class="mt-4"><p></p></div>
 
     <div class="block">
-      <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-primary'>
+      <a href="{% url 'add-to-cart' product_pk=object.pk %}" class='button is-dark'>
         Añadir al carrito
       </a>
 
       {% if user.is_authenticated %}
         {% if is_pedido %}
-          <a href="{% url 'pedido-detail' %}" class='button'>
+          <a href="{% url 'pedido-detail' %}" class='button is-dark'>
             Ver carrito
           </a>
         {% endif %}
@@ -57,10 +57,10 @@
     </div>
     <div class="content">
       <p>
-        <a href="{% url 'product-list' %}">Ver Lista de Productos</a>
+        <a href="{% url 'product-list' %}" class="button is-dark">Ver Lista de Productos</a>
       </p>
       <p>
-        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'home' %}" class="button is-dark">Inicio</a>
       </p>
     </div>
 {% endblock %}
