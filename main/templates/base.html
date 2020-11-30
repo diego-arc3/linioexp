@@ -10,7 +10,7 @@
     <nav class="navbar" style="background-color:rgb(50,94,125);">
       <div class="navbar-brand" style="margin: 0.6em; margin-left: 1.5em;">
         {% load static %}
-        <img src="{% static 'main/logo_linio.png' %}" style="margin-top:1em; margin-bottom:1em;">
+        <img src="{% static 'main/logo_linio.png' %}" href="{% url 'home' %}" style="margin-top:1em; margin-bottom:1em;">
 
       </div>
       {% if user.is_authenticated %}
