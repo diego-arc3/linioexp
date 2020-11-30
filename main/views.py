@@ -18,7 +18,6 @@ from .forms import *
 # Create your views here.
 
 class HomePageView(TemplateView):
-    model = Pedido
     template_name = "main/home.html"
 
     def get_context_data(self, **kwargs):
