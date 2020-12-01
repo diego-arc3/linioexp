@@ -13,9 +13,8 @@ class ProductoFilter(django_filters.FilterSet):
     class Meta:
         model = Producto
         fields = {
-            'descripcion':['icontains'], 
-            'precio':['lt', 'gt'],
-            'descuento':['lt', 'gt']}
+            'nombre':['icontains'], 
+            'precio':['lt', 'gt']}
         
     def filter_by_order(self, queryset, name, value):
         expresion = 'precio' if value == 'ascendente' else '-precio'
