@@ -1,0 +1,31 @@
+{% extends "base-no-search.html" %}
+
+{% block content %}
+
+    <h3 class="title">Información de factura</h3>
+
+    <div class="block">
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="field">
+                <label class="label" for="id_factura_ruc">RUC</label>
+                <div class="control">
+                    <input class="input" style="border-color:rgb(50,94,125);" name="factura_ruc" required id="id_factura_ruc" 
+                        placeholder="Ingrese los 9 dígitos de su RUC">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="id_factura_razon_social">Razón social</label>
+                <div class="control">
+                    <input class="input" style="border-color: rgb(50,94,125);" name="factura_razon_social" required id="id_factura_razon_social" placeholder="Ingresar razón social">
+                </div>
+            </div>
+
+            <input type="submit" href="{% url 'payment' %}" value="Submit" class="button is-dark">
+        </form>
+    </div>
+
+
+{% endblock %}

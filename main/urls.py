@@ -20,6 +20,8 @@ urlpatterns = [
     path('remove_from_cart/<int:product_pk>', views.RemoveFromCartView.as_view(), name='remove-from-cart'),
     path('carrito/', views.PedidoDetailView.as_view(), name='pedido-detail'),
     path('checkout/<int:pk>', views.PedidoUpdateView.as_view(), name='pedido-update'),
+    
+    path('factura/<int:pk>', views.FacturaView.as_view(), name='factura'),
     path('payment/', views.PaymentView.as_view(), name='payment'),
     path('complete_payment/', views.CompletePaymentView.as_view(), name='complete-payment'),
     path('pedidos/', views.PedidosColaboradorView.as_view(), name='pedidos-list')

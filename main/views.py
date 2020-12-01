@@ -53,6 +53,7 @@ class PedidosClienteView(ListView):
         object_list = Pedido.objects.filter(cliente__exact=cliente.pk)
         return object_list   
 
+
 class CancelarPedidoView(View):
     def get(self, request, pedido_pk):
         # Obten el cliente
@@ -343,11 +344,10 @@ class PedidoDetailView(LoginRequiredMixin, DetailView):
         return context
     
 
-
 class PedidoUpdateView(UpdateView):
     model = Pedido
-    fields = ['ubicacion', 'direccion_entrega']
-    success_url = reverse_lazy('payment')
+    # Especificamos los campos que serán modificados en esta view
+    fields = ['direccion_entrega', 'ubicacion', 'metodo_pago', 'comprobante', 'correo_confirmacion']
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
@@ -357,6 +357,30 @@ class PedidoUpdateView(UpdateView):
         self.object.tarifa = randint(5, 20)
         return super().form_valid(form)
     
+    def get_success_url(self):
+        
+        if self.object.comprobante == 'FA':
+            return reverse_lazy('factura', kwargs={'pk': self.object.pk})
+        else:
+            return reverse_lazy('payment')
+
+
+
+
+class FacturaView(UpdateView):
+    model = Pedido
+    template_name_suffix = '_factura_form'
+    # Especificamos los campos que serán modificados en esta view
+    fields = ['factura_razon_social', 'factura_ruc']
+    success_url = reverse_lazy('payment')
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        self.object = form.save(commit=False)
+        
+        return super().form_valid(form)
+  
     
 class PaymentView(TemplateView):
     
@@ -384,6 +408,8 @@ class CompletePaymentView(View):
         # Cambia el estado del pedido
         pedido.estado = 'PAG'
         # Asignacion de repartidor
+        # Ordenar aleatoriamente con '?' puede ser lento y costoso computacionalmente
+        # dependiendo de la base de datos que se use
         pedido.repartidor = Colaborador.objects.order_by('?').first()
         # Guardamos los cambios
         pedido.save()
