@@ -145,18 +145,18 @@ class EstadoEntregadoView(View):
 class ProductListView(ListView):
     model = Producto
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ProductoFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+    
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query is not None:
             object_list = Producto.objects.filter(nombre__icontains=query)
             return object_list
         else:
-            return Producto.objects.all()
-        
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = ProductoFilter(self.request.GET, queryset=self.get_queryset())
-        return context
+            return Producto.objects.all()  
  
     
 class ProductDetailView(DetailView):
