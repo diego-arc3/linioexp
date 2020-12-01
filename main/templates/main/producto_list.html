@@ -47,7 +47,7 @@
     <h3> Productos </h3>
     <hr>
     <div class="columns is-multiline">
-      {% for producto in object_list %}
+      {% for producto in filter.qs %}
           <div class="column is-4">
               <div class="card">
                   <div class="card-image">
