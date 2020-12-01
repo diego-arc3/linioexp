@@ -13,7 +13,8 @@ class ProductoFilter(django_filters.FilterSet):
     class Meta:
         model = Producto
         fields = {
-            'nombre':['icontains'], 
+            'nombre':['icontains'],
+            'pk':['iexact'], 
             'precio':['lt', 'gt']}
         
     def filter_by_order(self, queryset, name, value):

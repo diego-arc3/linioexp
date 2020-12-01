@@ -3,8 +3,14 @@
 {% block content %}
 
     <form method="GET">
-        <div class="content">
-            <input class="input is-rounded" style="border-color:rgb(50,94,125);" type="text" name="nombre__icontains" placeholder="Busca tu producto...">
+        <div class="columns">
+            <div class="column is-7">
+                <input class="input is-rounded" style="border-color:rgb(50,94,125);" type="text" name="nombre__icontains" placeholder="Busca tu producto...">
+            </div>
+            <div class="column is-narrow">
+                <label class="label">Código</label>
+                <input class="input is-rounded" style="border-color:rgb(50,94,125);" type="text" name="pk__iexact" placeholder="Busca el código...">
+            </div>
         </div>
 
         <div class="columns">
