@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends "base-no-search.html" %}
 
 {% block content %}
 
     <form method="GET">
-        
+        <div class="content">
+            <input class="input is-rounded" style="border-color:rgb(50,94,125);" type="text" name="nombre__icontains" placeholder="Busca tu producto...">
+        </div>
+
         <div class="columns">
 
             <div class="column is-5">
