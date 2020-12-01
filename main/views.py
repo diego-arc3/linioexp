@@ -149,7 +149,6 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = ProductoFilter(self.request.GET, queryset=self.get_queryset())
         return context
-
  
     
 class ProductDetailView(DetailView):
