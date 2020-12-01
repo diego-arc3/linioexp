@@ -341,7 +341,7 @@ class PedidoDetailView(LoginRequiredMixin, DetailView):
 class PedidoUpdateView(UpdateView):
     model = Pedido
     # Especificamos los campos que serán modificados en esta view
-    fields = ['direccion_entrega', 'ubicacion', 'metodo_pago', 'comprobante', 'correo_confirmacion']
+    fields = ['direccion_entrega', 'ubicacion', 'comprobante']
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
