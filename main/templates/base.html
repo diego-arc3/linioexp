@@ -43,7 +43,7 @@
 
           <div class="content">
             <form action="{% url 'product-list' %}" method="get">
-                <input class="input is-rounded" type="text" name="q" placeholder="Busca tu producto...">
+                <input class="input is-rounded" style="border-color:rgb(50,94,125);" type="text" name="nombre__icontains" placeholder="Busca tu producto...">
             </form>
           </div>
           {% block content %}
