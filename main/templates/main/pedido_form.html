@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-no-search.html" %}
 
 {% block content %}
     <h3 class="title"> Checkout </h3>
@@ -6,14 +6,81 @@
         <h5 class="subtitle"> Completa tus datos </h5>
         <form method="post">
           {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" value="Submit" class="button is-info">
+
+          <div class="columns">
+            
+            <div class="column is-5">
+              <div class="field">
+                <label class="label" for="id_direccion">Dirección</label>
+                <div class="control">
+                    <input class="input is-dark" style="border-color:rgb(50,94,125)" required id="id_direccion" type="text"
+                     placeholder="Avenida/Calle/Jirón , Número de domicilio" name="direccion_entrega">
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-narrow">
+              <div class="field">
+                  <label class="label" for="id_ubicacion">Distrito</label>
+                  <div class="control">
+                      <div class="select is-dark">
+                          <select style="border-color:rgb(50,94,125)" name="ubicacion" id="id_ubicacion">
+                                  <option value="1">--</option>
+                              {% for ubicacion in form.ubicacion.field.queryset %}
+                                  <option value="{{ forloop.counter }}">{{ ubicacion }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+
+            <div class="column is-narrow">
+              <div class="field">
+                  <label class="label" for="id_metodo_pago">Método de pago</label>
+                  <div class="control">
+                      <div class="select is-dark">
+                          <select style="border-color:rgb(50,94,125)" name="metodo_pago" id="id_metodo_pago">
+                              <option value="TA">Tarjeta de crédito/débito</option>
+                              <option value="PA">Paypal</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="column is-narrow">
+              <div class="field">
+                  <label class="label" for="id_comprobante">Tipo de comprobante</label>
+                  <div class="control">
+                      <div class="select is-dark">
+                          <select style="border-color:rgb(50,94,125)" name="comprobante" id="id_comprobante">
+                              <option value="BO">Boleta</option>
+                              <option value="FA">Factura</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="field">
+            <label class="label" for="id_correo_confirmacion">
+              <input style="border-color:rgb(50,94,125)" type="checkbox" name="correo_confirmacion" id="id_correo_confirmacion">
+              ¿Desea recibir un correo de confirmación?
+            </label>
+          </div>
+
+
+          <input type="submit" value="Submit" class="button is-dark" style="margin-top:1em;">
         </form>
     </div>
     <hr>
     <div class="content">
-        <ul>
-          <li><a href="{% url 'product-list' %}">Ver Lista de Productos</a></li>
-        </ul>
+        <a class="button is-dark" href="{% url 'product-list' %}">Ver Lista de Productos</a>
     </div>
 {% endblock %}

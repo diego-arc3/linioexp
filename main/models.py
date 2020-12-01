@@ -112,6 +112,27 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=3)
     direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
     tarifa = models.FloatField(blank=True, null=True)
+    correo_confirmacion = models.BooleanField(default=False)
+    
+    ## Opciones de comprobante
+    BOLETA = 'BO'
+    FACTURA = 'FA'
+    COMPROBANTE_CHOICES = [
+        (BOLETA, 'Boleta'),
+        (FACTURA, 'Factura')
+    ]
+    comprobante = models.CharField(max_length=2, choices=COMPROBANTE_CHOICES, blank=True, null=True)
+    factura_ruc = models.CharField(max_length=11, blank=True, null=True)
+    factura_razon_social = models.CharField(max_length=40, blank=True, null=True)
+    
+    ## Opciones de método de pago
+    TARJETA = 'TA'
+    PAYPAL = 'PA'
+    METODO_PAGO_CHOICES = [
+        (TARJETA, 'Tarjeta de crédito/débito'),
+        (PAYPAL, 'Paypal')
+    ]
+    metodo_pago = models.CharField(max_length=2, choices=METODO_PAGO_CHOICES, blank=True, null=True)
 
     def __str__(self):
         return f'{self.cliente} - {self.fecha_creacion} - {self.estado}'
