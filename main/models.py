@@ -112,7 +112,6 @@ class Pedido(models.Model):
     estado = models.CharField(max_length=3)
     direccion_entrega = models.CharField(max_length=100, blank=True, null=True)
     tarifa = models.FloatField(blank=True, null=True)
-    correo_confirmacion = models.BooleanField(default=False)
     
     ## Opciones de comprobante
     BOLETA = 'BO'

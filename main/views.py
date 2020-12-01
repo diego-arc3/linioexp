@@ -64,13 +64,8 @@ class CancelarPedidoView(View):
         # Obtén el pedido que queremos modificar
         pedido = Pedido.objects.get(pk=pedido_pk)
         
-        if pedido.estado == "ET" or pedido.estado == "PAG":
-            # Armamos el mensaje
-            messages.success(request, 'Tu pedido ha sido cancelado sin costo alguno.')
-        
-        elif pedido.estado == "EC":
-            # Armamos el mensaje
-            messages.failure(request, 'Tu pedido ha sido cancelado, pero como el repartidor estaba en camino hemos descontado la tarifa de envío..')
+        # Armamos el mensaje
+        messages.success(request, 'Tu pedido ha sido cancelado sin costo alguno.')
         
         # Cambiamos el estado del pedido a "CAN" (Cancelado)
         pedido.estado = "CAN"
