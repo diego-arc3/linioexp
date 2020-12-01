@@ -3,8 +3,21 @@ from .models import Producto
 
 class ProductoFilter(django_filters.FilterSet):
     
+    CHOICES = (
+        ('ascendente', 'Mayor precio'),
+        ('descendente', 'Menor precio')
+    )
+    
+    ordering = django_filters.ChoiceFilter(label='Ordering', choices=CHOICES, method='filter_by_order')
     
     class Meta:
         model = Producto
-        fields = ('descripcion', 'precio', 'descuento')
+        fields = {
+            'descripcion':['icontains'], 
+            'precio':['lt', 'gt'],
+            'descuento':['lt', 'gt']}
+        
+    def filter_by_order(self, queryset, name, value):
+        expresion = 'precio' if value == 'ascendente' else '-precio'
+        return queryset.order_by(expression)
     
