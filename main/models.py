@@ -124,15 +124,6 @@ class Pedido(models.Model):
     comprobante = models.CharField(max_length=2, choices=COMPROBANTE_CHOICES, blank=True, null=True)
     factura_ruc = models.CharField(max_length=11, blank=True, null=True)
     factura_razon_social = models.CharField(max_length=40, blank=True, null=True)
-    
-    ## Opciones de método de pago
-    TARJETA = 'TA'
-    PAYPAL = 'PA'
-    METODO_PAGO_CHOICES = [
-        (TARJETA, 'Tarjeta de crédito/débito'),
-        (PAYPAL, 'Paypal')
-    ]
-    metodo_pago = models.CharField(max_length=2, choices=METODO_PAGO_CHOICES, blank=True, null=True)
 
     def __str__(self):
         return f'{self.cliente} - {self.fecha_creacion} - {self.estado}'
@@ -167,5 +158,3 @@ class DetallePedido(models.Model):
 class ProductoImage(models.Model):
     product = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to="products", null=True, blank=True)
-
-

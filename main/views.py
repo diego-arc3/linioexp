@@ -12,6 +12,7 @@ from random import randint
 
 from .models import *
 from .forms import *
+from .filters import *
 
 
 
@@ -143,6 +144,7 @@ class EstadoEntregadoView(View):
 
 class ProductListView(ListView):
     model = Producto
+    
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query is not None:
@@ -150,6 +152,11 @@ class ProductListView(ListView):
             return object_list
         else:
             return Producto.objects.all()
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ProductoFilter(self.request.GET, queryset=self.get_queryset())
+        return context
  
     
 class ProductDetailView(DetailView):
